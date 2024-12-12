@@ -66,6 +66,5 @@ Please make sure to cite properly in your work, for example:
 [1] Redmon, Joseph, et al. "You only look once: Unified, real-time object detection." *Proceedings of the IEEE conference on computer vision and pattern recognition*. 2016.
 
 ## Super-Resolution Generative Adversarial Network (SR-GAN)
-
-Hello, teting 
 ---
+Testing
