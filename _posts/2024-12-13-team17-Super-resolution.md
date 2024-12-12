@@ -16,7 +16,7 @@ date: 2024-01-01
 {:toc}
 
 ## Introduction
-
+ 
 ## History of Methods
 
 ## Method 1
