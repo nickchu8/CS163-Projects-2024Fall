@@ -67,7 +67,7 @@ Please make sure to cite properly in your work, for example:
 
 ## Super-Resolution Generative Adversarial Network (SR-GAN)
 The inspiration behind the Super-Resolution Generative Adverserial Network, or SR-GAN, was to combine multiple elements of efficient sub-pixel nets that were conceived in the past with traditional GAN loss functions. 
-![YOLO]({{/assets/images/UCLAdeepvision/SR-GAN-arch.jpg}}){: style="width: 400px; max-width: 100%;"}
+![YOLO]({/assets/images/UCLAdeepvision/SR-GAN-arch.jpg}){: style="width: 400px; max-width: 100%;"}
 
 ---
 
