@@ -16,9 +16,11 @@ date: 2024-01-01
 {:toc}
 
 ## Introduction
- 
-## History of Methods
+ Super-resolution (SR) is a fundamental task in computer vision that aims to enhance the resolution of an image by reconstructing its high-resolution (HR) counterpart from a given low-resolution (LR) input. An image can be mathematically represented as \(x \in \mathbb{R}^{w \times h \times c}\), where \(w\), \(h\), and \(c\) correspond to the width, height, and number of color channels, respectively.
+ This process has numerous applications in fields including medical imaging, satellite imagery, video enhancement, consumer electronics, and more. The significance of SR lies in its potential to extract more detailed information from low-quality images, enabling tasks such as object recognition, scene interpretation, and visual restoration to be performed with greater accuracy and precision.
 
+ Mathematically, SR can be defined as a mapping from x
+## History of Methods  
 ## Method 1
 
 ## Method 2
