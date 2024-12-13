@@ -57,6 +57,30 @@ $$
 
 or you can write in-text formula $$y = wx + b$$.
 
+## SwinIR: Image Restoration using Swin Transformer
+SwinIR (Swin Transformer for Image Restoration) addresses two main limitations of traditional convolutional neural networks (CNNs) in image restoration: content-independent convolution kernels, which may not adapt well to varying image regions, and the limited ability to model long-range dependencies due to the localized nature of convolutions. Leveraging the Swin Transformer, which combines local attention mechanisms and a shifted window scheme for global dependency modeling, SwinIR integrates the best features of CNNs and Transformers to enhance both accuracy and efficiency in image restoration tasks.
+
+SwinIR is structured into three key components:
+
+Shallow Feature Extraction, where a single 3×3 convolutional layer maps the input image into a higher-dimensional feature space. This module focuses on preserving low-frequency image details, crucial for reconstructing stable and visually consistent images. This is followed by Deep Feature Extraction, which is built out of Residual Swin Transformer Blocks (RSTBs). Each RSTB contains multiple Swin Transformer Layers (STLs) for capturing local attention within non-overlapping image patches. The STLs use a shifted window partitioning mechanism to alternate between local and cross-window interactions, enabling long-range dependency modeling without introducing border artifacts. After each sequence of STLs, a convolutional layer is applied for feature enhancement, followed by a residual connection to aggregate features efficiently. The output of the RSTB integrates both spatially invariant convolutional features and spatially varying self-attention features, ensuring better restoration accuracy. Lastly, a High-Quality Image Reconstruction layer fuses shallow and deep features through a long skip connection to reconstruct the high-resolution image. Sub-pixel convolution layers to upscale the features.
+
+![](/assets/images/UCLAdeepvision/SwinIR_Architecture.png)
+
+For superresolution tasks, they use the L1 pixel loss as the loss function, which is defined as:
+
+$$
+\[
+L = ||I_{RHQ} - I_{GT}||_1
+\]
+$$
+
+where \(I_{RHQ}\) is the high-resolution image reconstructed by SwinIR, and \(I_{GT}\) is the ground truth high-resolution image. 
+
+SwinIR demonstrates state-of-the-art performance on classical Image Super-Resolution, outperforming CNN-based methods like RCAN and even other Transformer-based methods like IPT, achieving up to a 0.47 dB gain in PSNR on benchmark datasets, while maintaining a competitive runtime. SwinIR uses a comparatively small number of parameters (~11.8M) than other transformer based architectures like IPT, and even convolutional models. 
+
+![](/assets/images/UCLAdeepvision/SwinIR_Performance.png)
+
+
 ### More Markdown Syntax
 You can find more Markdown syntax at [this page](https://www.markdownguide.org/basic-syntax/).
 
