@@ -69,12 +69,10 @@ Shallow Feature Extraction, where a single 3×3 convolutional layer maps the inp
 For superresolution tasks, they use the L1 pixel loss as the loss function, which is defined as:
 
 $$
-\[
-L = ||I_{RHQ} - I_{GT}||_1
-\]
+L = \lVert I_{RHQ} - I_{GT}\rVert_1
 $$
 
-where \(I_{RHQ}\) is the high-resolution image reconstructed by SwinIR, and \(I_{GT}\) is the ground truth high-resolution image. 
+where $$I_{RHQ}$$ is the high-resolution image reconstructed by SwinIR, and $$I_{GT}$$ is the ground truth high-resolution image. 
 
 SwinIR demonstrates state-of-the-art performance on classical Image Super-Resolution, outperforming CNN-based methods like RCAN and even other Transformer-based methods like IPT, achieving up to a 0.47 dB gain in PSNR on benchmark datasets, while maintaining a competitive runtime. SwinIR uses a comparatively small number of parameters (~11.8M) than other transformer based architectures like IPT, and even convolutional models. 
 
