@@ -17,7 +17,7 @@ date: 2024-01-01
 
 ## Introduction
 
-![Example of Low-Resolution vs. High-Resolution Images](/assets/images/UCLAdeepvision/SR.png)
+![Example of Low-Resolution vs. High-Resolution Images](/assets/images/UCLAdeepvision/team17/SR.png)
 *Figure 1: An illustration of SR enhancing image clarity.*
 
 Super-resolution (SR) is a transformative task in computer vision, aimed at enhancing the spatial resolution of images or videos by reconstructing high-resolution (HR) content from low-resolution (LR) inputs. The problem of SR is not only about visual appeal; it is fundamental to extracting meaningful details from data where high-quality inputs are unavailable or impractical to acquire.
@@ -50,7 +50,7 @@ With advances in machine learning and deep learning, SR techniques have evolved 
 
 Before the rise of deep learning, classical super-resolution methods relied on mathematical models and statistical assumptions. These methods laid the groundwork for modern SR techniques, offering insights into how high-frequency details could be recovered from low-resolution inputs. They can be broadly categorized as interpolation-based, reconstruction-based, and example-based approaches.
 
-![](/assets/images/UCLAdeepvision/bicubic.png)
+![](/assets/images/UCLAdeepvision/team17/bicubic.png)
 *Figure 2: Different interpolation methods: black dot is interpolated estimate.*
 
 ### Interpolation-Based Methods
@@ -103,19 +103,19 @@ SR3 operates in two key phases: Forward Diffusion and Reverse Denoising. It work
 
             where $z \sim \mathcal{N}(0, I)$ is Gaussian noise added for stochasticity.
 
-![](/assets/images/UCLAdeepvision/forwardnoise_denoising.png)
+![](/assets/images/UCLAdeepvision/team17/forwardnoise_denoising.png)
 
 For the model architecture, SR3 uses a modified U-Net backbone is used to process both the noisy HR image and the bicubic-upsampled LR image. These are concatenated channel-wise as input. Additionally, SR3 adds residual blocks and skip connections to improve gradient flow and learning efficiency. For efficient inference, SR3 sets the maximum inference budget to 100 diffusion steps, and hyper-parameter searches over the inference noise schedule.
 
 As a result of these model architecture optimizations by SR3, the model is able to achieve state-of-the-art performance on multiple super-resolution tasks across datasets and domains (faces, natural images). 
 
-![](/assets/images/UCLAdeepvision/sr3onfacesuperresolutiontask.png)
+![](/assets/images/UCLAdeepvision/team17/sr3onfacesuperresolutiontask.png)
 
 As seen in figure 5 just above, the images that SR3 produced in this example for a 16x16 --> 128x128 face super-resolution task contain finer details, such as skin and hair texture texture, outperforming other GAN-based methods (FSRGAN, PULSE) and a regression baseline trained with MSE while also avoiding GAN artifacts like mode collapse. 
 
 SR3 was able to achieve a fool rate close to 54%, meaning that it produces outputs that are nearly indistringuishable from real images. As a benchmark, the fool rate for the GAN-based method PULSE was 24.6% while the fool rate for FSRGAN was 8.9%, which showcases just how large of an improvement this is.
 
-![](/assets/images/UCLAdeepvision/sr3foolrates.png)
+![](/assets/images/UCLAdeepvision/team17/sr3foolrates.png)
 
 All in all, SR3 is a state-of-the-art diffusion-based super-resolution method that offers key advantages over GAN-based methods such as a stronger ability to generate sharp and detailed images, absence of GAN instability issues, such as mode collapse, due to probabilistic modeling, as well as efficiency due to its cascaded architecutre that allows for modular and parallel training.
 
@@ -126,7 +126,7 @@ SwinIR is structured into three key components:
 
 Shallow Feature Extraction, where a single 3×3 convolutional layer maps the input image into a higher-dimensional feature space. This module focuses on preserving low-frequency image details, crucial for reconstructing stable and visually consistent images. This is followed by Deep Feature Extraction, which is built out of Residual Swin Transformer Blocks (RSTBs). Each RSTB contains multiple Swin Transformer Layers (STLs) for capturing local attention within non-overlapping image patches. The STLs use a shifted window partitioning mechanism to alternate between local and cross-window interactions, enabling long-range dependency modeling without introducing border artifacts. After each sequence of STLs, a convolutional layer is applied for feature enhancement, followed by a residual connection to aggregate features efficiently. The output of the RSTB integrates both spatially invariant convolutional features and spatially varying self-attention features, ensuring better restoration accuracy. Lastly, a High-Quality Image Reconstruction layer fuses shallow and deep features through a long skip connection to reconstruct the high-resolution image. Sub-pixel convolution layers to upscale the features [3].
 
-![](/assets/images/UCLAdeepvision/SwinIR_Architecture.png)
+![](/assets/images/UCLAdeepvision/team17/SwinIR_Architecture.png)
 
 For superresolution tasks, they use the L1 pixel loss as the loss function, which is defined as:
 
@@ -138,7 +138,7 @@ where $$I_{RHQ}$$ is the high-resolution image reconstructed by SwinIR, and $$I_
 
 SwinIR demonstrates state-of-the-art performance on classical Image Super-Resolution, outperforming CNN-based methods like RCAN and even other Transformer-based methods like IPT, achieving up to a 0.47 dB gain in PSNR on benchmark datasets, while maintaining a competitive runtime. SwinIR uses a comparatively small number of parameters (~11.8M) than other transformer based architectures like IPT, and even convolutional models [3]. 
 
-![](/assets/images/UCLAdeepvision/SwinIR_Performance.png)
+![](/assets/images/UCLAdeepvision/team17/SwinIR_Performance.png)
 
 ## Super-Resolution Generative Adversarial Network (SR-GAN)
 The inspiration behind the Super-Resolution Generative Adverserial Network, or SR-GAN, was to combine multiple elements of efficient sub-pixel nets that were conceived in the past with traditional GAN loss functions. To recap, the ordinary GAN architecture requires two neural networks - one called the generator and another called the discriminator. Here, the generator of the GAN serves to create new images from an input data sample while the discriminator also takes these same input data samples, but serves to distringuish between fake and real images produced by the GAN. The loss function to train this GAN is known as the min-max loss function, where the generator essentially tries to minimize this function while the discriminator tries to maximize it. The theory is that after training, the generator will produce images that the discriminator calculates as 50 percent change of being either fake or not. 
@@ -158,12 +158,12 @@ where the total loss for the SR-GAN is a weighted sum of the content loss and ad
 
 Below is an image and description of the specific architecture of the generator and discriminator. 
 
-![](/assets/images/UCLAdeepvision/SR-GAN-Arch.JPG)
+![](/assets/images/UCLAdeepvision/team17/SR-GAN-Arch.JPG)
 
 Firstly, we will go over the generator, whose main objective is to upsample Low Resolution images to super-resolution images. The main difference between an ordinary GAN and SR-GAN is that the generator takes in a Low Resolution input and then passes an image through a Conv layer. This is different from an ordinary GAN because ordinary GANs takes in a noise vector. The generator then employs residual blocks, where the idea is to keep information from previous layers and allow the network to choose features more adaptively. The discriminator is follows the same standard architecture of GANs.
 
 Below is a result of how the SR-GAN performs relative to other Super Resolution models.
-![](/assets/images/UCLAdeepvision/SR-GAN-Results.JPG)
+![](/assets/images/UCLAdeepvision/team17/SR-GAN-Results.JPG)
 
 As we can see from the images and table published in "Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network" [1], SR-GANs seem to outperform it counterparts. From the table PSNR is a metric used to measure the quality of an image or video by comparing a compressed or noisy image with the original one. It is based on the ratio of the peak signal (maximum possible pixel value) to the noise (difference between the original and the processed image). A higher value the better, and as we can see SR-GAN and SR-Resnet outperforms all other models.
 
