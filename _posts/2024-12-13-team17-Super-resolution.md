@@ -83,7 +83,42 @@ Classical methods' limitations, such as reliance on handcrafted features, led to
 Deep learning SR models surpassed classical methods by automating feature learning and capturing complex patterns, paving the way for advanced architectures like GANs and attention mechanisms.
 
 ---
-## Method 1
+## Diffusion-Based Methods: Super-Resolution via Iterative Refinement (SR3)
+SR3 (Super-Resolution via Iterative Refinement) is a novel approach to super-resolution using diffusion probabilistic models that was proposed by Chitwan Saharia et al. in 2021. It adapts these models for conditional image generation, achieving high-quality results through a stochastic denoising process.
+
+SR3 operates in two key phases: Forward Diffusion and Reverse Denoising. It works as follows:
+   1. **Forward Diffusion: Adding noise**
+      
+         - The forward process adds Gaussian noise to the HR target image step-by-step using a Markovian-based process. This transforms the HR image into pure noise over $T$ steps.
+
+         - At the final step $T$, $y_T$ is approximately pure Gaussian noise.
+
+   3. **Reverse Denoising: Removing noise**
+      
+        -  The reverse process begins with a noisy image $y_T \sim \mathcal{N}(0, I)$, and iteratively denoises it to produce $y_0$, the reconstructed HR image.
+
+         - A U-Net-based denoising model $f_{\theta}$ is used to estimate the noise at each step. The denoising objective ensures the predicted noise is subtracted at every iteration:
+
+            $$y_{t-1} = \frac{1}{\sqrt{\alpha_t}} \left( y_t - \frac{1 - \alpha_t}{\sqrt{1 - \gamma_t}} f_\theta(x, y_t, \gamma_t) \right) + \sqrt{1 - \alpha_t} z$$
+
+            where $z \sim \mathcal{N}(0, I)$ is Gaussian noise added for stochasticity.
+
+![](/assets/images/UCLAdeepvision/forwardnoise_denoising.png)
+
+For the model architecture, SR3 uses a modified U-Net backbone is used to process both the noisy HR image and the bicubic-upsampled LR image. These are concatenated channel-wise as input. Additionally, SR3 adds residual blocks and skip connections to improve gradient flow and learning efficiency. For efficient inference, SR3 sets the maximum inference budget to 100 diffusion steps, and hyper-parameter searches over the inference noise schedule.
+
+As a result of these model architecture optimizations by SR3, the model is able to achieve state-of-the-art performance on multiple super-resolution tasks across datasets and domains (faces, natural images). 
+
+![](/assets/images/UCLAdeepvision/sr3onfacesuperresolutiontask.png)
+
+As seen in figure 5 just above, the images that SR3 produced in this example for a 16x16 --> 128x128 face super-resolution task contain finer details, such as skin and hair texture texture, outperforming other GAN-based methods (FSRGAN, PULSE) and a regression baseline trained with MSE while also avoiding GAN artifacts like mode collapse. 
+
+SR3 was able to achieve a fool rate close to 54%, meaning that it produces outputs that are nearly indistringuishable from real images. As a benchmark, the fool rate for the GAN-based method PULSE was 24.6% while the fool rate for FSRGAN was 8.9%, which showcases just how large of an improvement this is.
+
+![](/assets/images/UCLAdeepvision/sr3foolrates.png)
+
+All in all, SR3 is a state-of-the-art diffusion-based super-resolution method that offers key advantages over GAN-based methods such as a stronger ability to generate sharp and detailed images, absence of GAN instability issues, such as mode collapse, due to probabilistic modeling, as well as efficiency due to its cascaded architecutre that allows for modular and parallel training.
+
 
 ## Method 2
 
@@ -140,5 +175,7 @@ You can find more Markdown syntax at [this page](https://www.markdownguide.org/b
 Please make sure to cite properly in your work, for example:
 
 [1] Redmon, Joseph, et al. "You only look once: Unified, real-time object detection." *Proceedings of the IEEE conference on computer vision and pattern recognition*. 2016.
+
+[2] Saharia, Chitwan, et al. "Image Super-Resolution via Iterative Refinement." arXiv preprint arXiv:2104.07636, 2021.
 
 ---
