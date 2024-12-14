@@ -169,6 +169,9 @@ As we can see from the images and table published in "Photo-Realistic Single Ima
 
 ---
 [1] Ledwif, Christian, et al. "Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network" 2017
+
 [2] Saharia, Chitwan, et al. "Image Super-Resolution via Iterative Refinement." arXiv preprint arXiv:2104.07636, 2021.
+
 [3] Liang, Jingyun, et al. "SwinIR: Image Restoration Using Swin Transformer." *arXiv preprint arXiv:2108.10257* (2021).
+
 ---
