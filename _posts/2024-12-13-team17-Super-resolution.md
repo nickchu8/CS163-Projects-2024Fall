@@ -175,6 +175,35 @@ You can find more Markdown syntax at [this page](https://www.markdownguide.org/b
 Please make sure to cite properly in your work, for example:
 
 [1] Redmon, Joseph, et al. "You only look once: Unified, real-time object detection." *Proceedings of the IEEE conference on computer vision and pattern recognition*. 2016.
+[2] Ledwif, Christian, et al. "Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network" 2017
+
+## Super-Resolution Generative Adversarial Network (SR-GAN)
+The inspiration behind the Super-Resolution Generative Adverserial Network, or SR-GAN, was to combine multiple elements of efficient sub-pixel nets that were conceived in the past with traditional GAN loss functions. To recap, the ordinary GAN architecture requires two neural networks - one called the generator and another called the discriminator. Here, the generator of the GAN serves to create new images from an input data sample while the discriminator also takes these same input data samples, but serves to distringuish between fake and real images produced by the GAN. The loss function to train this GAN is known as the min-max loss function, where the generator essentially tries to minimize this function while the discriminator tries to maximize it. The theory is that after training, the generator will produce images that the discriminator calculates as 50 percent change of being either fake or not. 
+
+SR-GAN built upon this through developing a new loss function. Instead of just the min max loss function, SR GAN uses a perceptual loss function which consists of both an adverserial and content loss. The adversarial loss is the standard GAN loss, which pushes the solution to the natural image manifold using a discriminator network that is trained to differentiate between the super-resolved images and original photo-realistic images. The content loss is motivated by perceptual similarity instead of similarity in pixel space. This is based on features extracted from a pre-trained deep network (such as VGG-19) to measure the perceptual similarity between the generated and ground truth images. This loss captures high-level features like textures and structures, which are more aligned with human visual perception. This deep residual network is then able to recover photo-realistic textures from heavily downsampled images on public benchmarks. [2]
+
+Formally they write the perceptual loss function as a weighted sum of a (VGG) content loss and an adversarial loss component as:
+
+$$
+\[
+L_{\text{SRGAN}}(Y, \hat{Y}) = L_{\text{content}}(Y, \hat{Y}) + \lambda L_{\text{adv}}(G, D)
+\]
+$$
+
+where the total loss for the SR-GAN is a weighted sum of the content loss and adversarial loss and lambda is a hyperparameter. 
+
+Below is an image and description of the specific architecture of the generator and discriminator. 
+
+![](/assets/images/UCLAdeepvision/SR-GAN-Arch.JPG)
+
+Firstly, we will go over the generator, whose main objective is to upsample Low Resolution images to super-resolution images. The main difference between an ordinary GAN and SR-GAN is that the generator takes in a Low Resolution input and then passes an image through a Conv layer. This is different from an ordinary GAN because ordinary GANs takes in a noise vector. The generator then employs residual blocks, where the idea is to keep information from previous layers and allow the network to choose features more adaptively. The discriminator is follows the same standard architecture of GANs.
+
+Below is a result of how the SR-GAN performs relative to other Super Resolution models.
+![](/assets/images/UCLAdeepvision/SR-GAN-Results.JPG)
+
+As we can see from the images and table published in "Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network" [2], SR-GANs seem to outperform it counterparts. From the table PSNR is a metric used to measure the quality of an image or video by comparing a compressed or noisy image with the original one. It is based on the ratio of the peak signal (maximum possible pixel value) to the noise (difference between the original and the processed image). A higher value the better, and as we can see SR-GAN and SR-Resnet outperforms all other models.
+
+---
 
 [2] Saharia, Chitwan, et al. "Image Super-Resolution via Iterative Refinement." arXiv preprint arXiv:2104.07636, 2021.
 
