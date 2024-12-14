@@ -103,26 +103,21 @@ SR3 operates in two key phases: Forward Diffusion and Reverse Denoising. It work
 
             where $z \sim \mathcal{N}(0, I)$ is Gaussian noise added for stochasticity.
 
-insert image here!!
+![](/assets/images/UCLAdeepvision/forwardnoise_denoising.png)
 
-For the model architecture, SR3 uses a modified U-Net backbone is used to process both the noisy HR image and the bicubic-upsampled LR image. These are concatenated channel-wise as input. Additionally, SR3 adds residual blocks and skip connections to improve gradient flow and learning efficiency. For efficient inference SR3 sets the maximum inference budget to 100 diffusion steps, and hyper-parameter searches over the inference noise schedule.
+For the model architecture, SR3 uses a modified U-Net backbone is used to process both the noisy HR image and the bicubic-upsampled LR image. These are concatenated channel-wise as input. Additionally, SR3 adds residual blocks and skip connections to improve gradient flow and learning efficiency. For efficient inference, SR3 sets the maximum inference budget to 100 diffusion steps, and hyper-parameter searches over the inference noise schedule.
 
 As a result of these model architecture optimizations by SR3, the model is able to achieve state-of-the-art performance on multiple super-resolution tasks across datasets and domains (faces, natural images). 
 
-inser image here!!
+![](/assets/images/UCLAdeepvision/sr3onfacesuperresolutiontask.png)
 
 As seen in figure 5 just above, the images that SR3 produced in this example for a 16x16 --> 128x128 face super-resolution task contain finer details, such as skin and hair texture texture, outperforming other GAN-based methods (FSRGAN, PULSE) and a regression baseline trained with MSE while also avoiding GAN artifacts like mode collapse. 
 
 SR3 was able to achieve a fool rate close to 54%, meaning that it produces outputs that are nearly indistringuishable from real images. As a benchmark, the fool rate for the GAN-based method PULSE was 24.6% while the fool rate for FSRGAN was 8.9%, which showcases just how large of an improvement this is.
 
-insert image here!!
+![](/assets/images/UCLAdeepvision/sr3foolrates.png)
 
 All in all, SR3 is a state-of-the-art diffusion-based super-resolution method that offers key advantages over GAN-based methods such as a stronger ability to generate sharp and detailed images, absence of GAN instability issues, such as mode collapse, due to probabilistic modeling, as well as efficiency due to its cascaded architecutre that allows for modular and parallel training.
-
- 
-
-   
-
 
 
 ## Method 2
@@ -180,5 +175,7 @@ You can find more Markdown syntax at [this page](https://www.markdownguide.org/b
 Please make sure to cite properly in your work, for example:
 
 [1] Redmon, Joseph, et al. "You only look once: Unified, real-time object detection." *Proceedings of the IEEE conference on computer vision and pattern recognition*. 2016.
+
+[2] Saharia, Chitwan, et al. "Image Super-Resolution via Iterative Refinement." arXiv preprint arXiv:2104.07636, 2021.
 
 ---
